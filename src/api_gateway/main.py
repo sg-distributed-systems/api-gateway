@@ -8,5 +8,9 @@ def handle_request(path: str) -> None:
     logger.debug("request_routed", path=path, destination="backend")
 
 
-if __name__ == "__main__":
+def main() -> None:
     handle_request("/users/123")
+
+
+if __name__ == "__main__":
+    main()
