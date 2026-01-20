@@ -6,13 +6,22 @@ delegate to core business logic functions.
 """
 from fastapi import APIRouter
 
-from .main import handle_request
 from .schemas import HandleRequestRequest, HandleRequestResponse
+from .service import handle_request
 
 router = APIRouter()
 
 
-@router.post("/gateway/handle", response_model=HandleRequestResponse)
+@router.post("/gateway/handle", response_model=HandleRequestResponse, status_code=200)
 def handle_request_route(req: HandleRequestRequest) -> HandleRequestResponse:
-    handle_request(req.path)
-    return HandleRequestResponse(status="ok")
+    result = handle_request(
+        path=req.path,
+        method=req.method,
+        headers=req.headers,
+        body=req.body,
+    )
+    return HandleRequestResponse(
+        status_code=result["status_code"],
+        latency_ms=result["latency_ms"],
+        routed_to=result["routed_to"],
+    )
