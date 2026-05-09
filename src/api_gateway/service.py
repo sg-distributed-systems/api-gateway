@@ -12,7 +12,7 @@ from core_logger import get_logger
 
 from .errors import NotFoundError, ValidationError
 
-logger = get_logger("api-gateway")
+logger = get_logger("api-gateway", tier="business")
 
 ROUTE_MAP = {
     "/users": "user-service",
