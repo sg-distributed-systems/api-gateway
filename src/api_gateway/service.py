@@ -47,3 +47,15 @@ def handle_request(
     latency_ms = (time.monotonic() - start_time) * 1000
     logger.info("request_completed", path=path, destination=destination, latency_ms=latency_ms)
     return {"status_code": 200, "latency_ms": round(latency_ms, 2), "routed_to": destination}
+
+
+def check_rate_limit(client_id: str, max_requests: int = 100) -> bool:
+    logger.debug("rate_limit_checked", client_id=client_id, max_requests=max_requests)
+
+    if not client_id:
+        raise ValidationError("client_id_required")
+
+    if max_requests <= 0:
+        raise ValidationError("invalid_rate_limit", details={"max_requests": max_requests})
+
+    return True
