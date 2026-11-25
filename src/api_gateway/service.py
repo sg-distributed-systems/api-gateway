@@ -8,11 +8,11 @@ for observability.
 import time
 from typing import Optional
 
-from core_logger import get_logger
+from core_logger import Tier, get_logger
 
 from .errors import NotFoundError, ValidationError
 
-logger = get_logger("api-gateway")
+logger = get_logger("api-gateway", tier=Tier.INFRASTRUCTURE)
 
 ROUTE_MAP = {
     "/users": "user-service",
